@@ -4,13 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 const ai = new GoogleGenAI({});
 
 export async function POST(request: NextRequest) {
-    let text: string;
+    let url: string;
 
     try {
         const body = await request.json();
-        text = body.text;
+        url = body.text;
 
-        if (!text) {
+        if (!url) {
             return NextResponse.json(
                 { error: "Відсутній аргумент в тілі запиту." },
                 { status: 400 }
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         };
 
     } catch (error) {
-        console.error("Помилка читання тіла запиту:", error);
+        console.error("Reading JSON body error:", error);
         return NextResponse.json(
             { error: "Невірний JSON тіла запиту." }, 
             { status: 400 }
@@ -26,17 +26,22 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-        const prompt = `Оброби дані які я тобі запропоную, твоя робота - зробити з них новинну статтю зберігаючи офіційний новииний стіль та основний контекст та достовірність інформації. Стаття має бути до 1000 символів. Ось дані: ${text}`;
+        const prompt = `Оброби статтю за посиланням та зроби з неї саммарі до 2000 символів. Зберігай офіційний стиль та атрибути новини, контекст. ось посилання: ${url}`;
         const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        config: {
-            thinkingConfig: {
-                thinkingBudget: 0,
-            },
+            model: "gemini-2.5-flash",
+            config: {
+                tools: [
+                    {urlContext: {}},
+                    {googleSearch: {}}
+                ],
+                thinkingConfig: {
+                    thinkingBudget: 0,
+                },
             systemInstruction: "Ти сутність новинного сайту NEWSWEN. Ти робиш контент і живеш всередині сайту.",
             },
         contents: prompt
         });
+        
         return Response.json(response.text);
 
     } catch (error) {

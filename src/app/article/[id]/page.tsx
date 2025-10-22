@@ -29,8 +29,19 @@ export default function ArticlePage({ params }: { params: Promise<{ id: string }
     // fetching generated content
     useEffect(() => {
         // extracting prompt text
-        const promptText = (article?.content)?.split("...")[0];
-        if (!promptText) return;
+        const url = article?.url;
+
+        // cache local storage
+        const cacheKey = `generated_${article?.id}`;
+        const cached = localStorage.getItem(cacheKey);
+
+        if (cached) {
+            setGeneratedContent(cached);
+            setLoading(false);
+            return;
+        }
+
+        if (!url) return;
 
          const generate = async () => {
             setLoading(true);
@@ -38,12 +49,15 @@ export default function ArticlePage({ params }: { params: Promise<{ id: string }
                 const res = await fetch('/api/generate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: promptText }),
+                    body: JSON.stringify({ url: url }),
                 });
+
                 console.log(res);
                 if (!res.ok) throw new Error(`Помилка: ${res.status}`);
                 const data = await res.json();
+
                 setGeneratedContent(data);
+                localStorage.setItem(cacheKey, data);
             } catch (error) {
                 console.error('Error generating content:', error);
             } finally {
@@ -56,7 +70,6 @@ export default function ArticlePage({ params }: { params: Promise<{ id: string }
 
     return (
         <div>
-            <h1>ARTICLE</h1>
             <h2>📰 Згенерована стаття:</h2>
             {loading ? <p>Generating...</p> : <p>{generatedContent ?? 'No data'}</p>}
         </div>
