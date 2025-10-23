@@ -42,8 +42,9 @@ export default function ArticlePage({ params }: { params: Promise<{ id: string }
         }
 
         if (!url) return;
+        console.log('Generating content for URL:', url);
 
-         const generate = async () => {
+        const generate = async () => {
             setLoading(true);
             try {
                 const res = await fetch('/api/generate', {
@@ -69,9 +70,15 @@ export default function ArticlePage({ params }: { params: Promise<{ id: string }
     }, [article])
 
     return (
-        <div>
-            <h2>📰 Згенерована стаття:</h2>
-            {loading ? <p>Generating...</p> : <p>{generatedContent ?? 'No data'}</p>}
+        <div className="flex flex-col max-w-5xl gap-5 items-center justify-center m-auto">
+            <h2 className="text-2xl text-center">{article?.title}</h2>
+
+            {loading 
+                ? 
+                    <p>Generating...</p> 
+                : 
+                    <p>{generatedContent ?? 'No data'}</p>
+            }
         </div>
     )
 }

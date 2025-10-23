@@ -6,9 +6,10 @@ const ai = new GoogleGenAI({});
 export async function POST(request: NextRequest) {
     let url: string;
 
+    // extracting url
     try {
         const body = await request.json();
-        url = body.text;
+        url = body.url;
 
         if (!url) {
             return NextResponse.json(
@@ -25,8 +26,9 @@ export async function POST(request: NextRequest) {
         );
     }
 
+    // generating article content
     try {
-        const prompt = `Оброби статтю за посиланням та зроби з неї саммарі до 2000 символів. Зберігай офіційний стиль та атрибути новини, контекст. ось посилання: ${url}`;
+        const prompt = `Оброби статтю за посиланням та зроби з неї саммарі до 2000 символів. Зберігай офіційний стиль та атрибути новини, контекст. Зроби все у вигляді чистого тексту щоб гарно виглядало у параграфі. Назву статті не роби. Ось посилання: ${url}`;
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             config: {
@@ -37,7 +39,7 @@ export async function POST(request: NextRequest) {
                 thinkingConfig: {
                     thinkingBudget: 0,
                 },
-            systemInstruction: "Ти сутність новинного сайту NEWSWEN. Ти робиш контент і живеш всередині сайту.",
+            systemInstruction: "Ти сутність новинного сайту. Ти відповідальний за контент, маєш бути послідовним та чітким у виконанні своїх дій. ",
             },
         contents: prompt
         });

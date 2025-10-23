@@ -24,9 +24,9 @@ export default function Home() {
       <h1>NEWSY</h1>
       <br />
 
-      <ul className="flex flex-col gap-5 m-3">
+      <ul className="grid grid-cols-2 gap-10 m-3 justify-center mx-auto max-w-5xl">
         {articles.map((article: NewsArticle) => (
-          <li key={article.id} className="flex flex-col bg-neutral-700 justify-center items-center p-4 rounded-md gap-4">
+          <li key={article.id} className="flex flex-col bg-neutral-700 justify-center items-center p-4 rounded-md gap-4 max-w-lg">
             <Image
               src={article.image}
               alt={article.title}
@@ -35,9 +35,9 @@ export default function Home() {
               className="rounded-md"
             />
             <div className="flex flex-col gap-2">
-              <h2>{article.title}</h2>
-              <p>{article.content}</p>
-              <Link className="place-self-center" href={`/article/${article.id}`}>READ</Link>
+              <h2 className="text-2xl text-center">{article.title}</h2>
+              <p>{article.content.split('...')[0] + '...'}</p>
+              <Link target="_blank" rel="noopener noreferrer" className="place-self-center" href={`/article/${article.id}`}>READ</Link>
             </div>
           </li>
         ))}
