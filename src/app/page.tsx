@@ -36,8 +36,25 @@ export default function Home() {
             />
             <div className="flex flex-col gap-2">
               <h2 className="text-2xl text-center">{article.title}</h2>
+
               <p>{article.content.split('...')[0] + '...'}</p>
-              <Link target="_blank" rel="noopener noreferrer" className="place-self-center" href={`/article/${article.id}`}>READ</Link>
+
+              <Link 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="place-self-center" 
+                href={article.url}
+              >
+                SOURCE
+              </Link>
+
+              <Link
+                className="place-self-center" 
+                href={`/article/${article.id}`}
+              >
+                AI SUM
+              </Link>
+
             </div>
           </li>
         ))}
