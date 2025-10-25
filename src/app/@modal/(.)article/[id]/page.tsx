@@ -121,7 +121,7 @@ export default function ArticleModalPage() {
           ✕
         </button>
 
-        <div>
+        <div className="flex items-center justify-center">
           {loading 
             ? 
             <div className="flex flex-col gap-5 justify-center items-center">

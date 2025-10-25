@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { NewsArticle } from "@/lib/types";
+import Header from "@/components/Header";
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
@@ -21,7 +22,7 @@ export default function Home() {
 
   return (
     <>
-      <h1>NEWSY</h1>
+      <Header />
       <br />
 
       <ul className="grid grid-cols-2 gap-10 m-3 justify-center mx-auto max-w-5xl">

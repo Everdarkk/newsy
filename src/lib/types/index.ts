@@ -14,3 +14,9 @@ export interface NewsArticle {
   title: string;
   url: string;
 }
+
+export interface CustomCSSProperties extends React.CSSProperties {
+  '--layers-count'?: number;
+  '--layer-offset'?: string;
+  '--i'?: number;
+}
