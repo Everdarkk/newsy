@@ -37,12 +37,12 @@ export default function ArticleModalPage() {
       .catch((error) => console.error('Error fetching article:', error));
   }, [id]);
 
-  // fetching generated content (тільки один раз)
+  // fetching generated content
   useEffect(() => {
     if (!article?.url) return;
-    if (generatedOnce.current) return; // вже генерували
+    if (generatedOnce.current) return;
 
-    generatedOnce.current = true; // flag established
+    generatedOnce.current = true;
 
     const cacheKey = `generated_${article.id}`;
     const cached = localStorage.getItem(cacheKey);
@@ -53,25 +53,49 @@ export default function ArticleModalPage() {
       return;
     }
 
+    const MAX_RETRIES = 3; // reties number
+    const DELAY_MS = 1000; // 1 sec delay before retry
+
     const generate = async () => {
       setLoading(true);
-      try {
-        const res = await fetch('/api/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: article.url }),
-        });
+      
+      for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+        try {
+          const res = await fetch('/api/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: article.url }),
+          });
 
-        if (!res.ok) throw new Error(`Помилка: ${res.status}`);
-        const data = await res.json();
+          // successful response
+          if (res.ok) {
+            const data = await res.json();
 
-        setGeneratedContent(data);
-        localStorage.setItem(cacheKey, data);
-      } catch (error) {
-        console.error('Error generating content:', error);
-      } finally {
-        setLoading(false);
+            setGeneratedContent(data);
+            localStorage.setItem(cacheKey, data);
+            
+            setLoading(false);
+            return; 
+          }
+          
+          // unsuccessful response
+          console.warn(`Attempt ${attempt} failed with status: ${res.status}`);
+          
+        } catch (error) {
+          // netork or other errors
+          console.error(`Attempt ${attempt} failed with error:`, error);
+        }
+
+        // waiting till next attempt
+        if (attempt < MAX_RETRIES) {
+          await new Promise(resolve => setTimeout(resolve, DELAY_MS));
+        }
       }
+      
+      // if all attempts failed
+      console.error(`Failed to generate content after ${MAX_RETRIES} attempts.`);
+      setLoading(false);
+      setGeneratedContent(null);
     };
 
     generate();
@@ -97,11 +121,29 @@ export default function ArticleModalPage() {
           ✕
         </button>
 
-        <h2 className="text-xl font-bold mb-2">{article?.title}</h2>
         <div>
           {loading 
-            ? <p>Generating...</p> 
-            : <p>{generatedContent ?? 'No data'}</p>
+            ? 
+            <div className="flex flex-col gap-5 justify-center items-center">
+              <div>
+                <h2 className="text-lg text-center">Треба трохи зачекати, поки я роблю для Вас статтю.</h2>
+              </div>
+              <div className="flex ai-thinking min-h-[400px]">
+                <span className="ai-dot"></span>
+                <span className="ai-dot"></span>
+                <span className="ai-dot"></span>
+              </div>
+            </div> 
+            : 
+            <div className="flex flex-col min-h-[400px] gap-5 justify-center items-center">
+              <h2 className="text-xl font-bold mb-2 text-center">
+                {generatedContent ? article?.title : null}
+              </h2>
+
+              <p>
+                {generatedContent ?? 'Щось точно пішло не за планом. Спробуйте оновити сторінку.'}
+              </p>
+            </div>
           }
         </div>
       </div>
