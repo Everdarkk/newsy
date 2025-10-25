@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Unlock&display=swap');
-/* 1. Анімація обертання всього layeredText */
+
 .layeredText {
     animation: wobble 27s infinite linear;
 }
@@ -8,7 +8,6 @@
   to { transform: rotate(360deg) rotateX(30deg) rotate(0deg); }
 }
 
-/* 2. Анімація тіні для видимого тексту (span) */
 .animate-shadow-custom {
     animation: shadow 2s infinite ease-in-out alternate;
 }
@@ -17,7 +16,6 @@
   to { text-shadow: 0 0 0.2em #000; }
 }
 
-/* 3. Анімація гойдання для контейнера шарів (.layers) */
 .layers {
     animation: hover 2s infinite ease-in-out alternate;
 }

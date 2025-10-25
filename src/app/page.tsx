@@ -27,7 +27,7 @@ export default function Home() {
 
       <ul className="grid grid-cols-2 gap-10 m-3 justify-center mx-auto max-w-5xl">
         {articles.map((article: NewsArticle) => (
-          <li key={article.id} className="flex flex-col bg-neutral-700 justify-center items-center p-4 rounded-md gap-4 max-w-lg">
+          <li key={article.id} className="flex flex-col bg-neutral-900 justify-center items-center p-4 rounded-md gap-4 max-w-lg hover:scale-102 transition-transform shadow-[5px_5px_15px_rgba(20,20,20,0.5)]">
             <Image
               src={article.image}
               alt={article.title}

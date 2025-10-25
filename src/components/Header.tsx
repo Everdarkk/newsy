@@ -4,7 +4,7 @@ import { CustomCSSProperties } from "@/lib/types";
 
 export default function Header() {
     const layersCount = 24;
-    const layerOffset = 1; // 1px
+    const layerOffset = 1;
     const layers = Array.from({ length: layersCount }, (_, i) => i + 1);
 
     return (
