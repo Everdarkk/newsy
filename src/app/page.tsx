@@ -1,6 +1,6 @@
 'use client';
 
-import useSWR from 'swr'; // 👈 Імпортуємо useSWR
+import useSWR from 'swr';
 import Link from "next/link";
 import Image from "next/image";
 import { NewsArticle } from "@/lib/types";
@@ -16,7 +16,7 @@ export default function Home() {
 
     if (error) return <div className="text-center mt-20">Помилка завантаження новин.</div>;
 
-    if (!articles) return <div className="text-center mt-20">Завантаження новин...</div>;
+    if (!articles) return <div className="min-h-screen flex justify-center items-center"><Header /></div>;
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function Home() {
 
       <ul className="grid grid-cols-2 gap-10 m-3 justify-center mx-auto max-w-5xl">
         {articles.map((article: NewsArticle) => (
-          <li key={article.id} className="flex flex-col bg-neutral-900 justify-between items-center p-4 rounded-md gap-4 max-w-lg hover:scale-102 transition-transform shadow-[5px_5px_15px_rgba(20,20,20,0.5)]">
+          <li key={article.id} className="flex flex-col bg-neutral-900 justify-between items-center p-4 rounded-md border border-neutral-700 gap-4 max-w-lg hover:scale-102 transition-transform shadow-[5px_5px_15px_rgba(20,20,20,0.5)]">
             <Image
               src={article.image}
               alt={article.title}
