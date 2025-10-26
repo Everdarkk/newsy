@@ -7,7 +7,7 @@ export async function GET() {
     const response = await fetch(
         `https://gnews.io/api/v4/top-headlines?category=general&lang=uk&apikey=${key}`, 
         { 
-            next: { revalidate: 900 } // Next.js HTTP Caching
+            next: { revalidate: 900, tags: ['gnews-latest'] } // Next.js HTTP Caching and tag for latest data fetch
         }
     );
 
