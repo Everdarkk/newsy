@@ -1,24 +1,22 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import useSWR from 'swr'; // 👈 Імпортуємо useSWR
 import Link from "next/link";
 import Image from "next/image";
 import { NewsArticle } from "@/lib/types";
 import Header from "@/components/Header";
 
+// swr fetcher
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+
 export default function Home() {
-  const [articles, setArticles] = useState([]);
+    const { data: articles, error } = useSWR<NewsArticle[]>('/api/news', fetcher, {
+        revalidateOnFocus: true,
+    });
 
-  useEffect(() => {
-    fetch('/api/news')
-      .then(res => res.json())
-      .then(data => {
-        setArticles(data);
-        console.log('Fetched articles:', data);
-      })
-      .catch(err => console.error('Error fetching articles:', err));
-  }, []);
+    if (error) return <div className="text-center mt-20">Помилка завантаження новин.</div>;
 
+    if (!articles) return <div className="text-center mt-20">Завантаження новин...</div>;
 
   return (
     <>
