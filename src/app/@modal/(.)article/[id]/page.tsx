@@ -76,7 +76,7 @@ export default function ArticleModalPage() {
                     // reading streamed response
                     const reader = res.body.getReader();
                     const decoder = new TextDecoder('utf-8');
-                    const TYPING_DELAY_MS = 5; // 👈 Затримка між символами (можна налаштувати)
+                    const TYPING_DELAY_MS = 5; // typing effect delay
                     let currentDisplayContent = '';
 
                     while (true) {
@@ -136,7 +136,7 @@ export default function ArticleModalPage() {
             onClick={handleClose}
         >
             <div
-                className="relative bg-neutral-900 text-neutral-100 p-6 rounded-2xl max-w-3xl w-[90%] shadow-2xl overflow-y-auto max-h-[90vh] border border-neutral-700"
+                className="relative bg-neutral-900 text-neutral-100 p-6 max-w-3xl w-[90%] shadow-2xl overflow-y-auto max-h-[90vh] border-2 border-neutral-600"
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
@@ -160,7 +160,7 @@ export default function ArticleModalPage() {
                             </div>
                         </div>
                         :
-                        <div className="flex flex-col min-h-[400px] gap-5 justify-center items-center">
+                        <div className="flex flex-col min-h-[300px] gap-5 justify-start items-center">
                             <h2 className="text-xl font-bold mb-2 text-center">
                                 {article?.title}
                             </h2>
