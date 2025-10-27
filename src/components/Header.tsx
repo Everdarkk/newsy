@@ -4,7 +4,7 @@ import '../lib/styles/text.css';
 export default function Header() {
 
     return (
-        <div className="flex justify-center items-center gap-10 bg-neutral-900 border-t-2 border-b-2 border-t-neutral-600 border-b-neutral-600 w-full h-auto">
+        <div className="header flex justify-center items-center gap-10 bg-neutral-900 border-double w-auto h-auto">
             <Image
                 src={'/images/owl.png'}
                 alt="Logo"

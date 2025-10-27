@@ -25,7 +25,7 @@ export default function Home() {
 
       <ul className="grid grid-cols-2 gap-10 m-3 justify-center mx-auto max-w-5xl">
         {articles.map((article: NewsArticle) => (
-          <li key={article.id} className="flex flex-col bg-neutral-900 justify-between items-center p-4 border-2 border-neutral-600 gap-4 max-w-lg hover:scale-102 transition-transform shadow-[5px_5px_15px_rgba(20,20,20,0.5)] grayscale hover:grayscale-0">
+          <li key={article.id} className="flex flex-col bg-neutral-900 justify-between items-center p-4 border-double gap-4 max-w-lg hover:scale-102  grayscale hover:grayscale-0 transition-transform shadow-[5px_5px_15px_rgba(20,20,20,0.5)]">
             <Image
               src={article.image}
               alt={article.title}
@@ -37,14 +37,14 @@ export default function Home() {
             <div className="flex flex-col gap-2">
               <h2 className="text-2xl text-center">{article.title}</h2>
 
-              <p>{article.content.split('...')[0] + '...'}</p>  
+              <p className="p-4 bg-neutral-800">{article.content.split('...')[0] + '...'}</p>  
             </div>
 
             <div className="flex w-full justify-around">
               <Link
                 target="_blank"
                 rel="noopener noreferrer"
-                className="place-self-center"
+                className="place-self-center p-3 bg-neutral-800"
                 href={article.url}
               >
                 <Image
@@ -52,11 +52,11 @@ export default function Home() {
                   alt={'AI'}
                   width={50}
                   height={50}
-                  className="grayscale hover:grayscale-0 transition-all hover:scale-[1.05]"
+                  className=" transition-all hover:scale-[1.05] opacity-50 hover:opacity-100"
                 />
               </Link>
               <Link
-                className="place-self-center"
+                className="place-self-center p-3 bg-neutral-800"
                 href={`/article/${article.id}`}
               >
                 <Image
@@ -64,7 +64,7 @@ export default function Home() {
                   alt={'AI'}
                   width={50}
                   height={50}
-                  className="grayscale hover:grayscale-0 transition-all hover:scale-[1.05]"
+                  className="transition-all hover:scale-[1.05] opacity-50 hover:opacity-100"
                 />
               </Link>
             </div>

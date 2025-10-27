@@ -136,7 +136,7 @@ export default function ArticleModalPage() {
             onClick={handleClose}
         >
             <div
-                className="relative bg-neutral-900 text-neutral-100 p-6 max-w-3xl w-[90%] shadow-2xl overflow-y-auto max-h-[90vh] border-2 border-neutral-600"
+                className="relative bg-neutral-900 text-neutral-100 p-6 max-w-3xl w-[90%] shadow-2xl overflow-y-auto max-h-[90vh] border-double"
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
@@ -165,7 +165,7 @@ export default function ArticleModalPage() {
                                 {article?.title}
                             </h2>
 
-                            <p>
+                            <p className="p-3 bg-neutral-800">
                                 {generatedContent ?? 'Щось точно пішло не за планом. Спробуйте оновити сторінку.'}
                             </p>
                         </div>
