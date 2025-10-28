@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { NewsArticle } from "@/lib/types";
+import Image from "next/image";
 
 export default function ArticleModalPage() {
     const [article, setArticle] = useState<NewsArticle | null>(null);
@@ -151,13 +152,16 @@ export default function ArticleModalPage() {
                         ?
                         <div className="flex flex-col gap-5 justify-center items-center">
                             <div>
-                                <h2 className="text-lg text-center">Треба трохи зачекати, поки я роблю для Вас статтю.</h2>
+                                <h2 className="text-lg text-center">Потрібно трохи зачекати доки я роблю для Вас статтю...</h2>
                             </div>
-                            <div className="flex ai-thinking min-h-[400px]">
-                                <span className="ai-dot"></span>
-                                <span className="ai-dot"></span>
-                                <span className="ai-dot"></span>
-                            </div>
+                            
+                            <Image 
+                                src={'/images/create.gif'}
+                                alt="Create"
+                                width={150}
+                                height={300}
+                            /> 
+                            
                         </div>
                         :
                         <div className="flex flex-col min-h-[300px] gap-5 justify-start items-center">

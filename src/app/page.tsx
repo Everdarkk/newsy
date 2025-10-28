@@ -16,7 +16,7 @@ export default function Home() {
 
     if (error) return <div className="text-center mt-20">Помилка завантаження новин.</div>;
 
-    if (!articles) return <div className="min-h-screen flex justify-center items-center"><Header /></div>;
+    if (!articles) return <div className="min-h-screen flex justify-center items-center">Завантаження...</div>;
 
   return (
     <>

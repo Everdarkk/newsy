@@ -45,10 +45,10 @@
 
   .border-double {
 	
-	margin: var(--line-w-outer);
-	border: solid 3px transparent;
-  box-shadow: 0 0 0 var(--line-w-outer) rgb(165, 165, 165) /* outer border line */, 
-      	inset 0 0 0 var(--line-w-inner) rgb(60, 146, 204) /* inner border line */;
+	  margin: var(--line-w-outer);
+	  border: solid 3px transparent;
+    box-shadow: 0 0 0 var(--line-w-outer) rgb(165, 165, 165) /* outer border line */, 
+    inset 0 0 0 var(--line-w-inner) #3dd4a2 /* inner border line */;
 }
 
 }
