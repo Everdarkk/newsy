@@ -49,7 +49,7 @@ export default function Home() {
               >
                 <Image
                   src={'/images/source.png'}
-                  alt={'AI'}
+                  alt={'SRC'}
                   width={50}
                   height={50}
                   className=" transition-all hover:scale-[1.05] opacity-50 hover:opacity-100"
